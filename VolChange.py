@@ -28,8 +28,8 @@ class Server(object):
 				print(self.data)
 				#self.l.release()
 			except:
-				data = ''
-			if(not data):
+				self.data = ''
+			if(not self.data):
 				break
 			else:
 				self.p.ChangeDutyCycle(float(self.data[0:5]))
