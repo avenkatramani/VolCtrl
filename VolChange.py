@@ -30,10 +30,10 @@ class Server(object):
 			if(not self.data):
 				break
 			else:
-				self.p.ChangeDutyCycle(float(self.data[0:5]))
+				self.p.ChangeDutyCycle(int(self.data))
 				for c in self.conns:
 					try:
-						c.send(self.data[0:5])
+						c.send(self.data)
 					except:
 						pass
 		self.conns.remove(conn)
@@ -43,7 +43,7 @@ class Server(object):
 		while True:
 			conn, addr = self.s.accept()
 			print('Received new connection')
-			conn.send(self.data[0:5])
+			conn.send(self.data)
 			self.conns += [conn]
 			print('Number of connections = ' + str(len(self.conns)))
 			start_new_thread(self.threaded_client,(conn,))
