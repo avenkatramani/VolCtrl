@@ -3,6 +3,8 @@ from kivy.uix.slider import Slider
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 import socket 
+from thread import *
+
 host ="192.168.0.137"
 port =1234
 
