@@ -23,10 +23,8 @@ class Server(object):
 	def threaded_client(self,conn):
 		while True:
 			try:
-				#self.l.acquire()
 				self.data = conn.recv(1024)
 				print(self.data)
-				#self.l.release()
 			except:
 				self.data = ''
 			if(not self.data):
@@ -35,15 +33,17 @@ class Server(object):
 				self.p.ChangeDutyCycle(float(self.data[0:5]))
 				for c in self.conns:
 					try:
-						c.send(data[0:5])
+						c.send(self.data[0:5])
 					except:
 						pass
+		self.conns.remove(conn)
 		conn.close()
 
 	def acceptConnection(self):
 		while True:
 			conn, addr = self.s.accept()
 			print('Received new connection')
+			conn.send(self.data[0:5])
 			self.conns += [conn]
 			print('Number of connections = ' + str(len(self.conns)))
 			start_new_thread(self.threaded_client,(conn,))
