@@ -33,7 +33,7 @@ class Server(object):
 			if(not self.data):
 				break
 			else:
-				self.p.ChangeDutyCycle(int(int(self.data)%100.1)))
+				self.p.ChangeDutyCycle(int(int(self.data)%100.1))
 				for c in self.conns:
 					if c != conn:
 						try:
