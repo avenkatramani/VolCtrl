@@ -18,7 +18,7 @@ class Server(object):
 		self.s.listen(5)
 		self.l = threading.Lock()
 		self.conns = []
-		self.data = '0.0000000'
+		self.data = '0'
 
 	def threaded_client(self,conn):
 		while True:
@@ -30,12 +30,13 @@ class Server(object):
 			if(not self.data):
 				break
 			else:
-				self.p.ChangeDutyCycle(int(self.data))
+				self.p.ChangeDutyCycle(int(self.data%100.1))
 				for c in self.conns:
-					try:
-						c.send(self.data)
-					except:
-						pass
+					if c != conn:
+						try:
+							c.send(self.data)
+						except:
+							pass
 		self.conns.remove(conn)
 		conn.close()
 
