@@ -23,14 +23,17 @@ class Server(object):
 	def threaded_client(self,conn):
 		while True:
 			try:
-				self.data = conn.recv(1024)
+				data = conn.recv(1024)
+				l.acquire()
+				self.data = data
+				l.release()
 				print(self.data)
 			except:
 				self.data = ''
 			if(not self.data):
 				break
 			else:
-				self.p.ChangeDutyCycle(int(self.data%100.1))
+				self.p.ChangeDutyCycle(int(int(self.data)%100.1)))
 				for c in self.conns:
 					if c != conn:
 						try:
